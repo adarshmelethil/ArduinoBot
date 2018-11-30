@@ -5,44 +5,36 @@
 
 
 ConstantPart::ConstantPart(const char* constant_out, int val){
-	const_val_int = val;
-	constant_out_name = (char *)constant_out;
-	char* my_outputs[1] = {constant_out_name};
-	const_type = INT;
-	ValueType my_output_types[1] = {const_type};
-	setOutputs(my_outputs, 1, my_output_types);
+	this->constant_out_name = (char *)constant_out;
+	this->const_val_int = val;
+	this->usingInt = true;
 }
 
 ConstantPart::ConstantPart(const char* constant_out, float val){
-	const_val_float = val;
-	const_type = FLOAT;
+	this->constant_out_name = (char *)constant_out;
+	this->const_val_float = val;
+	this->usingInt = false;
+}
 
-	constant_out_name = (char *)constant_out;
-	char* my_outputs[1] = {constant_out_name};
-	ValueType my_output_types[1] = {const_type};
-	setOutputs(my_outputs, 1, my_output_types);
+void* ConstantPart::getOutputValue(char* name){
+	if(this->sameName(name, this->constant_out_name)){
+		if(this->usingInt){
+			return &this->const_val_int;
+		}else{
+			return &this->const_val_float;
+		}
+	}
+	return nullptr;
 }
 
 
 void ConstantPart::Update(){
-	switch(const_type){
-		case INT: {
-			int* int_val_pt  = (int *)getOutputValue(constant_out_name);
-			*int_val_pt = const_val_int;
-			if (debug) {
-				Serial.print("Updating int constant: ");
-				Serial.println(const_val_int);
-			}
-			break;
+	if (debug) {
+		Serial.print("Updating called for constant: ");
+		if(usingInt){
+			Serial.println(this->const_val_int);
+		}else{
+			Serial.println(this->const_val_float);
 		}
-		case FLOAT: {
-			float* float_val_pt  = (float *)getOutputValue(constant_out_name);
-			*float_val_pt = const_val_float;
-			if (debug) {
-				Serial.print("Updating float constant: ");
-				Serial.println(const_val_float);
-			}
-			break;
-		}	
 	}
 }

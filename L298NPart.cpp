@@ -1,11 +1,11 @@
 
 
 #include "L298NPart.h"
-#include "Part.h"
+#include "Bot.h"
 #include <Arduino.h>
 
 
-L298NPart::L298NPart(const char* left, const char* right, int enA, int in1, int in2, int in3, int in4, int enB){
+L298NPart::L298NPart(const char* left, const char* right, int enA, int in1, int in2, int enB, int in3, int in4){
 	pinMode(enA, OUTPUT);
 	pinMode(in1, OUTPUT);
 	pinMode(in2, OUTPUT);
@@ -13,13 +13,15 @@ L298NPart::L298NPart(const char* left, const char* right, int enA, int in1, int 
 
 	left_input = (char *)left;
 	right_input = (char *)right;
-	char* my_inputs[2] = {left_input, right_input};
-	setInputs(my_inputs, 2);
+}
+
+void* L298NPart::getOutputValue( char* name ){
+	return nullptr;
 }
 
 void L298NPart::Update(){
-	float left_throttle = *(float *)getInputValue(left_input);
-	float right_throttle = *(float *)getInputValue(right_input);
+	float left_throttle = *(float *)this->getInputValue(left_input);
+	float right_throttle = *(float *)this->getInputValue(right_input);
 	if (debug) {
 		Serial.print("Updating L298N: ");
 		Serial.print(left_input);
@@ -29,5 +31,6 @@ void L298NPart::Update(){
 		Serial.print(right_input);
 		Serial.print(":");
 		Serial.println(right_throttle);
-	}	
+	}
+	// TODO: set pwm and pins
 }

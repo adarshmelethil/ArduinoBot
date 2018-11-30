@@ -12,15 +12,18 @@ class Bot
 {
 	public:
 		void UpdateParts();
-		int AddPart(Part* p);
-
-		void* GetMemVal(char* part_name);
-		void* GetMemVal(const char* part_name);
+		void AddPart(Part* p);
+		
+		// Get named varibale from the first part 
+		// with an output with said name
+		void* getValue(char* name);
+		void* getValue(const char* name);
 
 		unsigned int getNumOfParts(){ return num_of_parts; };
 		unsigned int getCurIteration(){ return iteration_counter; };
 
-		void Debug();
+		void setDebug(bool d);
+
 
 	private:
 		unsigned int iteration_counter = 0;
@@ -28,16 +31,9 @@ class Bot
 		unsigned int num_of_parts = 0;
 		Part** parts;
 
-		unsigned int num_mem_entries;
-		char** mem_names;
-		void** mem_values;
-
 		bool debug = false;
 
-		bool compareName(char* a, char* b);
 		void Initialize();
-		void* appendMemEntry(char* name, ValueType type);
-		void appendPart(Part* p);
 };
 
 #endif 
