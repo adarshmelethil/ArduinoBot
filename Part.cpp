@@ -19,6 +19,10 @@ bool Part::sameName(char* a, char* b){
   return false;
 }
 
-void Part::setDebug(bool d){
-  debug = d;
+void Part::setInputFunc(void* (*fptr)(void*, char*), void* bot){
+	this->getValueFromBot = fptr;
+	this->bot = bot;
+}
+void* Part::getInputValue(char* name) {
+	return this->getValueFromBot(this->bot, name);
 }

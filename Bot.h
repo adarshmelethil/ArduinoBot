@@ -17,15 +17,16 @@ class Bot
 		// Get named varibale from the first part 
 		// with an output with said name
 		void* getValue(char* name);
-		void* getValue(const char* name);
+		void getValue(char* name, void** ret_pointer);
 
 		unsigned int getNumOfParts(){ return num_of_parts; };
 		unsigned int getCurIteration(){ return iteration_counter; };
 
-		void setDebug(bool d);
+		void setDebug(bool d){ this->debug=d; }
 
 
 	private:
+
 		unsigned int iteration_counter = 0;
 
 		unsigned int num_of_parts = 0;
@@ -36,4 +37,5 @@ class Bot
 		void Initialize();
 };
 
+void* funcForwarder(void* context, char* name);
 #endif 

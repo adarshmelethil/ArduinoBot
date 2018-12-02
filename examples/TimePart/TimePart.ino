@@ -6,7 +6,7 @@
 Bot bot;
 void setup() {
   Serial.begin(9600);
-  TimePart tp = TimePart("time");
+  TimePart tp = TimePart((char *)"time");
   tp.setDebug(true);
   bot.AddPart(&tp);
   bot.setDebug(true);

@@ -10,16 +10,18 @@ class Part{
 		// Values that this part creates
 		virtual void* getOutputValue(char* name);
 
-		void setDebug(bool d);
+		void setDebug(bool d){ this->debug=d; }
 
 		// Called by the bot to set itself as the bot
-		void setInputFunc(void* (*fptr)(char*)){ this->getInputValue=fptr; }
+		void setInputFunc(void* (*fptr)(void*, char*), void* bot);
 
 	// Used by derived classes
 	protected:
-		void* (*getInputValue)(char* name);
+		void* (*getValueFromBot) (void* ctx, char* name);
+		void* getInputValue(char* name);
 		bool sameName(char* a, char* b);
 
+		void* bot;
 		bool debug = false;
 	private:
 		

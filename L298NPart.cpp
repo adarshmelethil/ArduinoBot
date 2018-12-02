@@ -20,17 +20,26 @@ void* L298NPart::getOutputValue( char* name ){
 }
 
 void L298NPart::Update(){
-	float left_throttle = *(float *)this->getInputValue(left_input);
-	float right_throttle = *(float *)this->getInputValue(right_input);
+	float* left_throttle = (float*)this->getInputValue(left_input);
+	float* right_throttle = (float*)this->getInputValue(right_input);
 	if (debug) {
-		Serial.print("Updating L298N: ");
+		Serial.print("L298N: ");
 		Serial.print(left_input);
 		Serial.print(":");
-		Serial.print(left_throttle);
+		if(left_throttle == nullptr){
+			Serial.print("null");
+		}else{
+			Serial.print(*left_throttle);
+		}
 		Serial.print(", ");
 		Serial.print(right_input);
 		Serial.print(":");
-		Serial.println(right_throttle);
+		if(right_throttle == nullptr){
+			Serial.println("null");
+		}else{
+			Serial.println(*right_throttle);
+		}
+		Serial.flush();
 	}
 	// TODO: set pwm and pins
 }
